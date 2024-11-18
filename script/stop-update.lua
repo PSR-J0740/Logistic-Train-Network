@@ -386,13 +386,23 @@ function UpdateStopOutput(trainStop, ignore_existing_cargo)
   local index = 0
 
   if trainStop.parked_train and trainStop.parked_train.valid then
-    -- get train composition
+    -- get train co
     local carriages = trainStop.parked_train.carriages
     local encoded_positions_by_name = {}
     local encoded_positions_by_type = {}
-    local inventory = not(ignore_existing_cargo) and trainStop.parked_train.get_contents() or {}
+    -- local inventory = not(ignore_existing_cargo) and trainStop.parked_train.get_contents() or {}
+    local inventory = {}
     local fluidInventory = not(ignore_existing_cargo) and trainStop.parked_train.get_fluid_contents() or {}
 
+    if not(ignore_existing_cargo) and trainStop.parked_train.get_contents() then
+      for i,k in pairs(trainStop.parked_train.get_contents()) do
+        inventory[k.name] = {
+          count = k.count,
+          quality = k.quality,
+        }
+      end
+    end
+    
     if #carriages < 32 then --prevent circuit network integer overflow error
       if trainStop.parked_train_faces_stop then --train faces forwards >> iterate normal
         for i=1, #carriages do
@@ -494,11 +504,11 @@ function UpdateStopOutput(trainStop, ignore_existing_cargo)
       for k,v in pairs(inventory) do
         if k ~= nil and type(v) == "table" then
           index = index+1
-          if k == 1 then
-            table.insert(signals, {index = index, signal = {value={type="item", name=v.name, quality=v.quality}, min=v.count}})
-          else
-            table.insert(signals, {index = index, signal = {value={type="item", name=k, quality=v.quality}, min=v.count}})
-          end
+          -- if k == 1 then
+          --   table.insert(signals, {index = index, signal = {value={type="item", name=v.name, quality=v.quality or "normal"}, min=v.count}})
+          -- else
+          table.insert(signals, {index = index, signal = {value={type="item", name=k, quality=v.quality or "normal"}, min=v.count}})
+          -- end
         end
       end
       for k,v in pairs(fluidInventory) do

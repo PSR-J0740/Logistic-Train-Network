@@ -1,7 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.2
+Date: 2024-11-18
+  Bugfixes:
+    - Fix alert for unscheduled cargo
+    - Fix messaging that wouldn't show the quality of delivered item
+    - Fix a crash from merged request
+---------------------------------------------------------------------------------------------------
 Version: 2.0.1
 Date: 2024-11-13
-  Bugfixes:
+  Features:
     - Basic (beta) support of Quality in request
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.0

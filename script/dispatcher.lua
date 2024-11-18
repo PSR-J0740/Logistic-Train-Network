@@ -543,7 +543,7 @@ function ProcessRequest(reqIndex, request)
   -- get providers ordered by priority
   local providers = getProviders(requestStation, item, count, min_carriages, max_carriages)
   if not providers or #providers < 1 then
-    if requestStation.no_warnings == false and message_level >= 1 then printmsg({"ltn-message.no-provider-found", to_gps, "[" .. itype .. "=" .. iname .. "]", to_network_id_string}, requestForce, true) end
+    if requestStation.no_warnings == false and message_level >= 1 then printmsg({"ltn-message.no-provider-found", to_gps, "[" .. itype .. "=" .. iname .. ",quality=" ..iquality.. "]", to_network_id_string}, requestForce, true) end
     if debug_log then log(format("No supply of %s found for Requester %s: surface: %s min length: %s, max length: %s, network-ID: %s", item, to, surface_name, min_carriages, max_carriages, to_network_id_string) ) end
     -- goto skipRequestItem
     return nil
@@ -557,7 +557,7 @@ function ProcessRequest(reqIndex, request)
   local from_gps = Make_Stop_RichText(providerData.entity) or from
   local matched_network_id_string = format("0x%x", band(providerData.network_id))
 
-  if message_level >= 3 then printmsg({"ltn-message.provider-found", from_gps, tostring(providerData.priority), tostring(providerData.activeDeliveryCount), providerData.count, "[" .. itype .. "=" .. iname .. "]"}, requestForce, true) end
+  if message_level >= 3 then printmsg({"ltn-message.provider-found", from_gps, tostring(providerData.priority), tostring(providerData.activeDeliveryCount), providerData.count, "[" .. itype .. "=" .. iname .. ",quality=" ..iquality.. "]"}, requestForce, true) end
 
   -- limit deliverySize to count at provider
   local deliverySize = count
@@ -657,7 +657,7 @@ function ProcessRequest(reqIndex, request)
   -- create delivery
   if message_level >= 2 then
     if #loadingList == 1 then
-      printmsg({"ltn-message.creating-delivery", from_gps, to_gps, loadingList[1].count, "[" .. loadingList[1].type .. "=" .. loadingList[1].name .. "]"}, requestForce)
+      printmsg({"ltn-message.creating-delivery", from_gps, to_gps, loadingList[1].count, "[" .. loadingList[1].type .. "=" .. loadingList[1].name .. ",quality=" ..loadingList[1].quality.. "]"}, requestForce)
     else
       printmsg({"ltn-message.creating-delivery-merged", from_gps, to_gps, totalStacks}, requestForce)
     end
