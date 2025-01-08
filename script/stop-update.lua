@@ -119,12 +119,7 @@ function UpdateStop(stopID, stop)
   local locked_slots = 0
 
   -- get circuit values 0.16.24
-  local signals = stop.input.get_circuit_network(defines.wire_connector_id.circuit_red).signals
-  local signalsGreen = stop.input.get_circuit_network(defines.wire_connector_id.circuit_green).signals
-  if signals == nil or signalsGreen == nil then return end
-  for _, value in ipairs(signalsGreen) do
-    table.insert(signals, value)
-  end
+  local signals = stop.input.get_signals(defines.wire_connector_id.circuit_red, defines.wire_connector_id.circuit_green)
   if not signals then return end -- either lamp and lampctrl are not connected or lampctrl has no output signal
 
   local signals_filtered = {}
