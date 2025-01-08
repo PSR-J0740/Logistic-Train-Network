@@ -120,6 +120,9 @@ function UpdateStop(stopID, stop)
 
   -- get circuit values 0.16.24
   local signals = stop.input.get_signals(defines.wire_connector_id.circuit_red, defines.wire_connector_id.circuit_green)
+  -- Note: Since the red and green wires control the lamp's colors, merging adds "signal-white" twice as both wires output the same value.
+  -- Possible fix: Remove line 118 or 119 in stop-event: "input.get_wire_connector(...).connect_to(lampctrl.get_wire_connector(...), false, ...)"
+  -- Tested without issues, but adding this note for awareness
   if not signals then return end -- either lamp and lampctrl are not connected or lampctrl has no output signal
 
   local signals_filtered = {}
@@ -364,7 +367,7 @@ end
 
 function setLamp(trainStop, color, count)
   -- skip invalid stops and colors
-  if trainStop and trainStop.lamp_control.valid and ColorLookup[color] then
+  if trainStop and trainStop.lamp_control.valid and ColorLookupRGB[color] then
     trainStop.lamp_control.get_control_behavior().get_section(1).set_slot(1,{value={type="virtual",name="signal-white",quality="normal"},min=ColorLookupRGB[color],max=ColorLookupRGB[color]})
     return true
   end
