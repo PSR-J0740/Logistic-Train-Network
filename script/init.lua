@@ -167,6 +167,15 @@ local function initialize(oldVersion, newVersion)
     end
   end
 
+  -- update to 2.0.0 : fix lamps
+  if oldVersion and oldVersion < "02.00.00" then
+    for _, stop in pairs(storage.LogisticTrainStops) do
+      stop.input.get_or_create_control_behavior().use_colors = true
+      stop.input.get_or_create_control_behavior().color_mode = defines.control_behavior.lamp.color_mode.packed_rgb
+      stop.input.get_or_create_control_behavior().rgb_signal = {type="virtual", name="signal-white"}
+    end
+  end
+
 end
 
 -- run every time the mod configuration is changed to catch stops from other mods
