@@ -8,12 +8,12 @@
 script.on_event("ltn-toggle-dispatcher", function(event)
   local player = game.get_player(event.player_index)
 
-  local enabled = settings.storage["ltn-dispatcher-enabled"].value
+  local enabled = settings.global["ltn-dispatcher-enabled"].value
   if enabled then
-    settings.storage["ltn-dispatcher-enabled"] = {value = false}
+    settings.global["ltn-dispatcher-enabled"] = {value = false}
     printmsg({"ltn-message.dispatcher-disabled", player.name}, nil, false)
   else
-    settings.storage["ltn-dispatcher-enabled"] = {value = true}
+    settings.global["ltn-dispatcher-enabled"] = {value = true}
     printmsg({"ltn-message.dispatcher-enabled", player.name}, nil, false)
   end
 end)
