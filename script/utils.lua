@@ -30,12 +30,7 @@ function GetTrainCapacity(train)
       inventorySize = inventorySize + capacity
     end
     for _,wagon in pairs(train.fluid_wagons) do
-      local capacity = 0
-      if storage.WagonCapacity[wagon.name] == 0 then
-        capacity = getFluidWagonCapacity(wagon)
-      else
-        capacity = storage.WagonCapacity[wagon.name]
-      end
+      local capacity = storage.WagonCapacity[wagon.name] or getFluidWagonCapacity(wagon)
       fluidCapacity = fluidCapacity + capacity
     end
   end

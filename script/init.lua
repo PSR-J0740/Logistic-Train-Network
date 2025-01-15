@@ -225,9 +225,8 @@ local function updateAllTrains()
   -- reset storage lookup tables
   storage.StoppedTrains = {} -- trains stopped at LTN stops
   storage.StopDistances = {} -- reset station distance lookup table
-  storage.WagonCapacity = {  --preoccupy table with wagons to ignore at 0 capacity
-    ["fluid-wagon"] = 0
-  }
+  storage.WagonCapacity = {}  --preoccupy table with wagons to ignore at 0 capacity
+
   storage.Dispatcher.availableTrains_total_capacity = 0
   storage.Dispatcher.availableTrains_total_fluid_capacity = 0
   storage.Dispatcher.availableTrains = {}
