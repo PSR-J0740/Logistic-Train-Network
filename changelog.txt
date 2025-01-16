@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.4
+Date: 2025-01-16
+  Bugfixes:
+    - Fix fluid miscalculation for modded wagons
+    - Fix crash when changing settings via hotkey (Ctrl+Shift+D)
+    - Migrated colors for stops placed in saves prior to version 2.0
+---------------------------------------------------------------------------------------------------
 Version: 2.0.3
 Date: 2025-01-08
   Bugfixes:

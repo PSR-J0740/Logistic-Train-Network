@@ -166,6 +166,17 @@ local function initialize(oldVersion, newVersion)
       stop.input.connect_neighbour({target_entity=stop.lamp_control, wire=defines.wire_type.red})
     end
   end
+  -- update to 2.0.0 : fix lamps
+  if oldVersion and oldVersion < "02.00.00" then
+    for _, stop in pairs(storage.LogisticTrainStops) do
+      local color = OldColor(stop.input.get_or_create_control_behavior().color)
+      stop.input.get_or_create_control_behavior().use_colors = true
+      stop.input.get_or_create_control_behavior().color_mode = defines.control_behavior.lamp.color_mode.packed_rgb
+      stop.input.get_or_create_control_behavior().rgb_signal = {type="virtual", name="signal-white"}
+      stop.lamp_control.get_control_behavior().get_section(1).set_slot(1,{value={type="virtual",name="signal-white",quality="normal"},min=color,max=color})
+
+    end
+  end
 
 end
 
@@ -226,7 +237,6 @@ local function updateAllTrains()
   storage.StoppedTrains = {} -- trains stopped at LTN stops
   storage.StopDistances = {} -- reset station distance lookup table
   storage.WagonCapacity = {}  --preoccupy table with wagons to ignore at 0 capacity
-
   storage.Dispatcher.availableTrains_total_capacity = 0
   storage.Dispatcher.availableTrains_total_fluid_capacity = 0
   storage.Dispatcher.availableTrains = {}

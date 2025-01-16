@@ -69,3 +69,17 @@ function Get_Or_Create(a_table, key)
   end
   return subtable
 end
+
+-- Convert old color into the new one for migration
+function OldColor(color)
+  if color then
+    if isValidOldColor(color.r) and isValidOldColor(color.g) and isValidOldColor(color.b) and isValidOldColor(color.a) then
+      local rgb = (color.r * 16711680 + color.g * 65280 + color.b * 255) * color.a
+      return rgb
+    end
+  end
+  return 0
+end
+function isValidOldColor(value)
+  return value == 0 or value == 1
+end
